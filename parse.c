@@ -42,6 +42,7 @@ void	add_to_record(t_reader *reader)
 			lst_alias = *lst_alias.next;
 		lst_alias.next = ft_lstnew(CONTENT, STD_SIZ);
 	}
+<<<<<<< 8e3e44b62d0e594fdda18dc37114475764bb052e
 }
 //TODO: Need an extra method here for error handling.
 void	just_display_alphabetically(char *fname, t_reader *reader)
