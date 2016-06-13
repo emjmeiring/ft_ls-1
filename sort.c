@@ -1,3 +1,5 @@
+#include "ft_ls.h"
+
 int		ft_strcmp(const char *str1, const char *str2)
 {
 	int i;
@@ -21,7 +23,7 @@ int		ft_strcmp(const char *str1, const char *str2)
 	return (s1 - s2);
 }
 
-void	sort(t_reader *reader)
+void	alpha_sort(t_reader *reader)
 {
 	while (read)
 	{
