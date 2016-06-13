@@ -14,8 +14,10 @@
 #define FT_LS_H
 #define STD_SIZ 	sizeof(struct dirent *) * 4
 #define CONTENT 	(void*)reader->open.read
-#define CMP_FILES	((struct dirent *)reader->store.content)->d_name, \
-				((struct dirent *)(reader->store.next->content)->d_name)
+#define CMP_FILES	((struct dirent *)reader->store->content)->d_name, \
+				((struct dirent *)reader->store->next->content)->d_name
+#define CURRENT_DIR "."
+#define HIDDEN CURRENT_DIR
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -47,7 +49,6 @@ typedef struct		s_dir_files_reader
 
 void				parse(int argc, char **argv, t_reader *reader);
 void				sort(t_reader *reader);
-void				or_curr_dir(t_reader *reader, char *fname);
-void				read_all(t_reader *reader, char *fname);
-void				read_all_nhid(t_reader *reader, char *fname);
+void				alpha_sort(t_reader *reader);
+void				display(t_reader *reader);
 #endif

@@ -27,6 +27,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 
 void	add_to_record(t_reader *reader)
 {
+	printf("In add record\n");
 	t_list lst_alias;
 	if (reader->store)
 		reader->store = ft_lstnew(CONTENT, STD_SIZ);
@@ -37,7 +38,6 @@ void	add_to_record(t_reader *reader)
 			lst_alias = *lst_alias.next;
 		lst_alias.next = ft_lstnew(CONTENT, STD_SIZ);
 	}
-	sort(reader);
 }
 
 void	just_display_alphabetically(char *fname, t_reader *reader)
@@ -46,24 +46,21 @@ void	just_display_alphabetically(char *fname, t_reader *reader)
 	while ((reader->open.read = readdir(reader->open.dirp)))
 	{
 		if (reader->open.read->d_name[0] != '.')
-		{
 			add_to_record(reader);
-			printf("%s    ", ((struct dirent *)reader->store->content)->d_name);
-			
-		//	write(1, reader->open.read->d_name,
-			//strlen(reader->open.read->d_name));
-		}
+		//alpha_sort(reader);
 	}
-	//alpha_sort(reader);
-	printf("\n");
+	display(reader);
 }
 
 void	parse(int argc, char **argv, t_reader *reader)
 {
 	if (argc == 1 || (argc == 2 && argv[1][0] == '.' && strlen(argv[1]) == 1))
-		just_display_alphabetically(".", reader);
+		just_display_alphabetically(CURRENT_DIR, reader);
 	else
 	{
+		//TODO: This is where things get really interesting. Need to search for
+		// flags, parse them and collect data relevant to each.
+		
 		printf("Fucks\n");
 	}
 }
