@@ -27,43 +27,40 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 
 void	add_to_record(t_reader *reader)
 {
-	t_list lst_alias;
-	printf("Adding to record in the beginning: %s\n", reader->open.read->d_name);
+	t_list *lst_alias;
+
 	if (!reader->store->next)
 	{
-		reader->store->next = ft_lstnew(CONTENT, STD_SIZ);
-		printf("Adding to record: %s\n", ((struct dirent *)reader->store->next->content)->d_name);
+		reader->store->next = ft_lstnew(reader->open.read,
+										sizeof(reader->store->next) * STD_SIZ);
 	}
 	else
 	{
-		printf("Adding to record2: %s\n", ((struct dirent *)reader->store->next->content)->d_name);
-		lst_alias = *reader->store;
-		while(lst_alias.next)
-			lst_alias = *lst_alias.next;
-		lst_alias.next = ft_lstnew(CONTENT, STD_SIZ);
+		lst_alias = reader->store;
+		while(lst_alias->next)
+			lst_alias = lst_alias->next;
+		lst_alias->next = ft_lstnew(reader->open.read,
+									sizeof(reader->store->next) * STD_SIZ);
 	}
 }
+
+void	init(char *fname, t_reader *reader)
+{
+	if ((reader->open.dirp = opendir(fname)));
+		reader->store = ft_lstnew((void *)readdir(reader->open.dirp),
+									sizeof(reader->open.read));
+}
+
 //TODO: Need an extra method here for error handling.
 void	just_display_alphabetically(char *fname, t_reader *reader)
 {
-	reader->open.dirp = opendir(fname);
+	init(fname, reader);
 	if (!reader->open.dirp)
 		perror("ft_ls: cannot access ../..sd: No such file or directory");
 	else
-	{
-		reader->open.read = readdir(reader->open.dirp);
-		reader->store = ft_lstnew(CONTENT, STD_SIZ);
 		while ((reader->open.read = readdir(reader->open.dirp)))
-		{
-		//	printf("Read this: %s\n...no need to record it\n", (reader->open.read)->d_name);
 			if (reader->open.read->d_name[0] != '.')
-			{
-			//	printf("But recording this: %s\n", (reader->open.read)->d_name);
 				add_to_record(reader);
-				//alpha_sort(reader);
-			}
-		}
-	}
 	reader->open.read = alpha_sort(reader);
 	display(reader);
 }
@@ -79,6 +76,6 @@ void	parse(int argc, char **argv, t_reader *reader)
 		//TODO: This is where things get really interesting. Need to search for
 		// flags, parse them and collect data relevant to each.
 		
-		//printf("Fucks\n");
+		printf("Fucks\n");
 	}
 }
