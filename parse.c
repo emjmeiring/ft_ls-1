@@ -28,12 +28,15 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 void	add_to_record(t_reader *reader)
 {
 	t_list lst_alias;
+	printf("Adding to record in the beginning: %s\n", reader->open.read->d_name);
 	if (!reader->store->next)
 	{
 		reader->store->next = ft_lstnew(CONTENT, STD_SIZ);
+		printf("Adding to record: %s\n", ((struct dirent *)reader->store->next->content)->d_name);
 	}
 	else
 	{
+		printf("Adding to record2: %s\n", ((struct dirent *)reader->store->next->content)->d_name);
 		lst_alias = *reader->store;
 		while(lst_alias.next)
 			lst_alias = *lst_alias.next;
@@ -48,17 +51,20 @@ void	just_display_alphabetically(char *fname, t_reader *reader)
 		perror("ft_ls: cannot access ../..sd: No such file or directory");
 	else
 	{
+		reader->open.read = readdir(reader->open.dirp);
 		reader->store = ft_lstnew(CONTENT, STD_SIZ);
 		while ((reader->open.read = readdir(reader->open.dirp)))
 		{
+		//	printf("Read this: %s\n...no need to record it\n", (reader->open.read)->d_name);
 			if (reader->open.read->d_name[0] != '.')
 			{
+			//	printf("But recording this: %s\n", (reader->open.read)->d_name);
 				add_to_record(reader);
-				alpha_sort(reader);
+				//alpha_sort(reader);
 			}
 		}
 	}
-	//alpha_sort(reader);
+	reader->open.read = alpha_sort(reader);
 	display(reader);
 }
 

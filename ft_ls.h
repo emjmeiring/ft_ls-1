@@ -12,7 +12,7 @@
 
 #ifndef FT_LS_H
 #define FT_LS_H
-#define STD_SIZ 	sizeof(struct dirent *)
+#define STD_SIZ 	sizeof(struct dirent *) * 2
 #define CONTENT 	(void*)reader->open.read
 #define CMP_FILES	((struct dirent *)reader->store->content)->d_name, \
 				((struct dirent *)reader->store->next->content)->d_name
@@ -49,6 +49,6 @@ typedef struct		s_dir_files_reader
 
 void				parse(int argc, char **argv, t_reader *reader);
 void				sort(t_reader *reader);
-void				alpha_sort(t_reader *reader);
+struct dirent		*alpha_sort(t_reader *reader);
 void				display(t_reader *reader);
 #endif

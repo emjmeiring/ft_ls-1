@@ -5,7 +5,7 @@ int		ft_strcmp(const char *s1, const char *s2)
 	unsigned char	*str1;
 	unsigned char	*str2;
 	int				i;
-
+	printf("String 1: %s\nString 2: %s\n", s1, s2);
 	str1 = (unsigned char*)s1;
 	str2 = (unsigned char*)s2;
 	i = 0;
@@ -18,24 +18,25 @@ int		ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-void	alpha_sort(t_reader *reader)
+struct dirent	*alpha_sort(t_reader *reader)
 {
 	int		swap;
 	t_list	*runner;
 	void	*temp;
-
+printf("String 1: %s\nString 2: %s\n", ((struct dirent *)runner->content)->d_name, ((struct dirent *)runner->content)->d_name);
 	swap = 1;
 	while (swap == 1)
 	{
 		swap = 0;
 		runner = reader->store;
-		if (runner->next)
+		if (!runner->next)
 		{
-			while (runner->next)
+			while (!runner->next)
 			{
 				if (ft_strcmp(((struct dirent *)runner->content)->d_name,
 					((struct dirent *)runner->next->content)->d_name) > 0)
 				{
+					printf("%s\n", ((struct dirent *)runner->content)->d_name);
 					temp = runner->content;
 					runner->content = runner->next->content;
 					runner->next->content = temp;
@@ -44,5 +45,7 @@ void	alpha_sort(t_reader *reader)
 				runner = runner->next;
 			}
 		}
+		
 	}
+	return (reader->open.read);
 }
