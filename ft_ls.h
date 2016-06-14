@@ -12,12 +12,9 @@
 
 #ifndef FT_LS_H
 #define FT_LS_H
-#define STD_SIZ 	sizeof(struct dirent *)
-#define CONTENT 	(void*)reader->open.read
-#define CMP_FILES	((struct dirent *)reader->store->content)->d_name, \
-				((struct dirent *)reader->store->next->content)->d_name
 #define CURRENT_DIR "."
 #define HIDDEN CURRENT_DIR
+#define STD_SIZ 4
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -43,12 +40,12 @@ typedef struct		s_dir_files_opener
 typedef struct		s_dir_files_reader
 {
 	t_opener		open;
-	t_list			*store;
+		t_list			*store;
 	struct stat		buf;
 }					t_reader;
 
 void				parse(int argc, char **argv, t_reader *reader);
 void				sort(t_reader *reader);
-void				alpha_sort(t_reader *reader);
+struct dirent		*alpha_sort(t_reader *reader);
 void				display(t_reader *reader);
 #endif

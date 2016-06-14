@@ -18,7 +18,7 @@ int		ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-void	alpha_sort(t_reader *reader)
+struct dirent	*alpha_sort(t_reader *reader)
 {
 	int		swap;
 	t_list	*runner;
@@ -44,5 +44,7 @@ void	alpha_sort(t_reader *reader)
 				runner = runner->next;
 			}
 		}
+		
 	}
+	return (reader->open.read);
 }
