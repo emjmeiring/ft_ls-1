@@ -1,39 +1,48 @@
 #include "ft_ls.h"
 
-int		ft_strcmp(const char *str1, const char *str2)
+int		ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
-	int s1;
-	int s2;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	int				i;
 
+	str1 = (unsigned char*)s1;
+	str2 = (unsigned char*)s2;
 	i = 0;
-	s1 = 0;
-	s2 = 0;
-	while (*(str1 + i))
+	while (str1[i] != '\0' || str2[i] != '\0')
 	{
-		s1 = s1 + *(str1 + i);
-		i++;
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i += 1;
 	}
-	i = 0;
-	while (*(str2 + i))
-	{
-		s2 = s2 + *(str2 + i);
-		i++;
-	}
-	return (s1 - s2);
+	return (0);
 }
 
 void	alpha_sort(t_reader *reader)
 {
-	while (read)
+	int		swap;
+	t_list	*runner;
+	void	*temp;
+
+	swap = 1;
+	while (swap == 1)
 	{
-		if (ft_strcmp(CMP_FILES) == 0)
+		swap = 0;
+		runner = reader->store;
+		if (runner->next)
 		{
-			
-		}
-		else if (ft_strcmp(CMP_FILES) > 0)
-		{
-			
+			while (runner->next)
+			{
+				if (ft_strcmp(((struct dirent *)runner->content)->d_name,
+					((struct dirent *)runner->next->content)->d_name) > 0)
+				{
+					temp = runner->content;
+					runner->content = runner->next->content;
+					runner->next->content = temp;
+					swap = 1;
+				}
+				runner = runner->next;
+			}
 		}
 	}
 }

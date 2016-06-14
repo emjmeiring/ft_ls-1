@@ -13,6 +13,5 @@ void	display(t_reader *reader)
 		printf("%s    ", ((struct dirent *)reader->store->content)->d_name);
 		reader->store = reader->store->next;
 	}
-	printf("%s    ", ((struct dirent *)reader->store->content)->d_name);
 	printf("\n");
 }
