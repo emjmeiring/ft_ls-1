@@ -49,6 +49,7 @@ void	just_display_alphabetically(char *fname, t_reader *reader)
 			add_to_record(reader);
 		//alpha_sort(reader);
 	}
+//TODO: Need an extra method here for error handling.
 	display(reader);
 }
 

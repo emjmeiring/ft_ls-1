@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-int		ft_strcmp(const char *str1, const char *str2)
+int		ft_strcmp(const char *s1, const char *s2)
 {
 	unsigned char	*str1;
 	unsigned char	*str2;
@@ -23,22 +23,26 @@ void	alpha_sort(t_reader *reader)
 	int		swap;
 	t_list	*runner;
 	void	*temp;
-	
+
 	swap = 1;
 	while (swap == 1)
 	{
 		swap = 0;
 		runner = reader->store;
-		while (runner->next != NULL)
+		if (runner->next)
 		{
-			if (ft_strcmp(runner->content, runner->next->content) > 0)
+			while (runner->next)
 			{
-				temp = runner->content;
-				runner->content = runner->next->content;
-				runner->next->content = temp;
-				swap = 1;
+				if (ft_strcmp(((struct dirent *)runner->content)->d_name,
+					((struct dirent *)runner->next->content)->d_name) > 0)
+				{
+					temp = runner->content;
+					runner->content = runner->next->content;
+					runner->next->content = temp;
+					swap = 1;
+				}
+				runner = runner->next;
 			}
-			runner = runner->next;
 		}
 	}
 }
