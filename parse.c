@@ -27,10 +27,11 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 
 void	add_to_record(t_reader *reader)
 {
-	printf("In add record\n");
 	t_list lst_alias;
-	if (reader->store)
-		reader->store = ft_lstnew(CONTENT, STD_SIZ);
+	if (!reader->store->next)
+	{
+		reader->store->next = ft_lstnew(CONTENT, STD_SIZ);
+	}
 	else
 	{
 		lst_alias = *reader->store;
@@ -39,28 +40,39 @@ void	add_to_record(t_reader *reader)
 		lst_alias.next = ft_lstnew(CONTENT, STD_SIZ);
 	}
 }
-
+//TODO: Need an extra method here for error handling.
 void	just_display_alphabetically(char *fname, t_reader *reader)
 {
 	reader->open.dirp = opendir(fname);
-	while ((reader->open.read = readdir(reader->open.dirp)))
+	if (!reader->open.dirp)
+		perror("ft_ls: cannot access ../..sd: No such file or directory");
+	else
 	{
-		if (reader->open.read->d_name[0] != '.')
-			add_to_record(reader);
-		//alpha_sort(reader);
+		reader->store = ft_lstnew(CONTENT, STD_SIZ);
+		while ((reader->open.read = readdir(reader->open.dirp)))
+		{
+			if (reader->open.read->d_name[0] != '.')
+			{
+				add_to_record(reader);
+				alpha_sort(reader);
+			}
+		}
 	}
+	//alpha_sort(reader);
 	display(reader);
 }
 
 void	parse(int argc, char **argv, t_reader *reader)
 {
-	if (argc == 1 || (argc == 2 && argv[1][0] == '.' && strlen(argv[1]) == 1))
+	if (argc == 1)
 		just_display_alphabetically(CURRENT_DIR, reader);
+	else if (argc == 2 && argv[1][0] != '-')
+			just_display_alphabetically(argv[1], reader);
 	else
 	{
 		//TODO: This is where things get really interesting. Need to search for
 		// flags, parse them and collect data relevant to each.
 		
-		printf("Fucks\n");
+		//printf("Fucks\n");
 	}
 }

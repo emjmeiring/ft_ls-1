@@ -12,7 +12,7 @@
 
 #ifndef FT_LS_H
 #define FT_LS_H
-#define STD_SIZ 	sizeof(struct dirent *) * 4
+#define STD_SIZ 	sizeof(struct dirent *)
 #define CONTENT 	(void*)reader->open.read
 #define CMP_FILES	((struct dirent *)reader->store->content)->d_name, \
 				((struct dirent *)reader->store->next->content)->d_name
