@@ -6,13 +6,12 @@
 /*   By: simzam <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/13 08:58:44 by simzam            #+#    #+#             */
-/*   Updated: 2016/06/13 09:53:19 by simzam           ###   ########.fr       */
+/*   Updated: 2016/06/14 17:00:01 by jomeirin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 #define FT_LS_H
-<<<<<<< 8e3e44b62d0e594fdda18dc37114475764bb052e
 #define STD_SIZ 	sizeof(struct dirent *) * 2
 #define CONTENT 	(void*)reader->open.read
 #define CMP_FILES	((struct dirent *)reader->store->content)->d_name, \
