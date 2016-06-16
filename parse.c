@@ -32,24 +32,37 @@ void	add_to_record(t_reader *reader)
 	printf("Adding to record in the beginning: %s\n", reader->open.read->d_name);
 	if (!reader->store->next)
 	{
-		reader->store->next = ft_lstnew(CONTENT, STD_SIZ);
-		printf("Adding to record: %s\n", ((struct dirent *)reader->store->next->content)->d_name);
+		reader->store->next = ft_lstnew(reader->open.read,
+										sizeof(reader->store->next) * STD_SIZ);
 	}
 	else
 	{
-		printf("Adding to record2: %s\n", ((struct dirent *)reader->store->next->content)->d_name);
-		lst_alias = *reader->store;
-		while(lst_alias.next)
-			lst_alias = *lst_alias.next;
-		lst_alias.next = ft_lstnew(CONTENT, STD_SIZ);
+		lst_alias = reader->store;
+		while(lst_alias->next)
+			lst_alias = lst_alias->next;
+		lst_alias->next = ft_lstnew(reader->open.read,
+									sizeof(reader->store->next) * STD_SIZ);
 	}
 }
 
+void	init(char *fname, t_reader *reader)
+{
+	if ((reader->open.dirp = opendir(fname)));
+		reader->store = ft_lstnew((void *)readdir(reader->open.dirp),
+									sizeof(reader->open.read));
+}
+
+//TODO: Need an extra method here for error handling.
 void	just_display_alphabetically(char *fname, t_reader *reader)
 {
-	reader->open.dirp = opendir(fname);
-	while ((reader->open.read = readdir(reader->open.dirp)))
-	{
+	init(fname, reader);
+	if (!reader->open.dirp)
+		perror("ft_ls: cannot access ../..sd: No such file or directory");
+	else
+		while ((reader->open.read = readdir(reader->open.dirp)))
+			if (reader->open.read->d_name[0] != '.')
+				add_to_record(reader);
+	reader->open.read = alpha_sort(reader);
 	display(reader);
 }
 
