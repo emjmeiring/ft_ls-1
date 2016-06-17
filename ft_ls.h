@@ -50,7 +50,8 @@ typedef struct		s_dir_files_opener
 typedef struct		s_dir_files_reader
 {
 	t_opener		open;
-		t_list			*store;
+	t_list			*store;
+	t_flags			flags;
 	struct stat		buf;
 }					t_reader;
 

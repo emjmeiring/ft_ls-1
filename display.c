@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
+/*
 size_t	ft_strlen(const char *s)
 {
 	int index;
@@ -55,7 +55,7 @@ void	size_lstiter(t_list *lst)
 		runner = runner->next;
 	}
 }
-
+*/
 void	display(t_reader *reader)
 {
 	t_list *runner;
