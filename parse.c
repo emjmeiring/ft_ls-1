@@ -6,7 +6,7 @@
 /*   By: jomeirin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/17 13:24:36 by jomeirin          #+#    #+#             */
-/*   Updated: 2016/06/17 13:24:43 by jomeirin         ###   ########.fr       */
+/*   Updated: 2016/06/17 15:47:00 by jomeirin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,19 @@ void	init_flags(t_flags *flags)
 	flags->time = '\0';
 	flags->all = '\0';
 }
-//void	display(t_flags flags, t_reader reader)
+//void	display_flags(t_flags flags, t_reader reader)
 //{
 	
 //}
+void	reursive_print(t_flags flags, t_reader reader)
+{
+	
+}
+void	apply_flags(t_flags flags, t_reader reader)
+{
+	if (flags.recursive == 'R')
+		recursive_print(flags, reader);
+}
 void	parse(int argc, char **argv, t_reader *reader)
 {
 	char	*dot;
@@ -144,15 +153,12 @@ void	parse(int argc, char **argv, t_reader *reader)
 			else if (init(argv[argc - 1], reader) == -1)
 				return ;
 			else 
-			{
 				find_flags(argc, argv, &flags);
-				if (init(argv[argc - 1], reader) == -1)
-					return ;
-			}
+			apply_flags(flags, reader);
 			//display_flags(flags, reader);
 		}
-		printf("%c:\n", flags.recursive);
-		printf("%c:\n", flags.reverse);
+		//printf("%c:\n", flags.recursive);
+		//printf("%c:\n", flags.reverse);
 		printf("Fucks\n");
 	}
 }
