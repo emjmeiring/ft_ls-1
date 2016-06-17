@@ -17,8 +17,17 @@ int		ft_strcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
+int		z_to_a(char *s1, char *s2)
+{
+	return (ft_strcmp(s1, s2) < 0);
+}
 
-struct dirent	*alpha_sort(t_reader *reader)
+int		a_to_z(char *s1, char *s2)
+{
+	return (ft_strcmp(s1, s2) > 0);
+}
+
+void	alpha_sort(t_reader *reader, int (*sort_by)(char *, char *))
 {
 	int		swap;
 	t_list	*runner;
@@ -29,22 +38,17 @@ struct dirent	*alpha_sort(t_reader *reader)
 	{
 		swap = 0;
 		runner = reader->store;
-		if (runner->next)
+		while (runner->next)
 		{
-			while (runner->next)
+			if ((sort_by)(((struct dirent *)runner->content)->d_name,
+				((struct dirent *)runner->next->content)->d_name))
 			{
-				if (ft_strcmp(((struct dirent *)runner->content)->d_name,
-					((struct dirent *)runner->next->content)->d_name) > 0)
-				{
-					temp = runner->content;
-					runner->content = runner->next->content;
-					runner->next->content = temp;
-					swap = 1;
-				}
-				runner = runner->next;
+				temp = runner->content;
+				runner->content = runner->next->content;
+				runner->next->content = temp;
+				swap = 1;
 			}
-		}
-		
+			runner = runner->next;
+		}	
 	}
-	return (reader->open.read);
 }
