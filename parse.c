@@ -26,12 +26,12 @@ t_list	*ft_lstnew(void const *content, size_t size)
 			return (NULL);
 		}
 		memcpy(new_list->content, content, size);
-		new_list->size = size;
+		new_list->content_size = size;
 	}
 	else
 	{
 		new_list->content = NULL;
-		new_list->size = 0;
+		new_list->content_size = 0;
 	}
 	new_list->next = NULL;
 	return (new_list);
@@ -130,7 +130,8 @@ void	apply_flags(t_reader reader)
 
 void	parse(int argc, char **argv, t_reader *reader)
 {
-	char	*dot;
+	char			*dot;
+	static int		depth;
 	//t_flags	flags;
 
 	dot = ".\0";
@@ -158,6 +159,7 @@ void	parse(int argc, char **argv, t_reader *reader)
 			apply_flags(*reader);
 			//display_flags(flags, reader);
 		}
+		recursive_list(dot, depth, reader);  
 		printf("%c:\n", reader->flags.recursive);
 		printf("%c:\n", reader->flags.reverse);
 		printf("Fucks\n");
