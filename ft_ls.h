@@ -35,8 +35,6 @@ typedef struct		s_flags
 	char			all;
 }					t_flags;
 
-typedef struct		s_list
-
 typedef struct		s_dir_files_opener
 {
 	DIR				*dirp;
