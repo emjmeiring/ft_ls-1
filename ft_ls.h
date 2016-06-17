@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simzam <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jomeirin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/13 08:58:44 by simzam            #+#    #+#             */
-/*   Updated: 2016/06/14 17:00:01 by jomeirin         ###   ########.fr       */
+/*   Created: 2016/06/17 13:25:48 by jomeirin          #+#    #+#             */
+/*   Updated: 2016/06/17 15:47:04 by jomeirin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ typedef struct		s_dir_files_opener
 typedef struct		s_dir_files_reader
 {
 	t_opener		open;
-		t_list			*store;
+	t_list			*store;
+	t_flags			flags;
 	struct stat		buf;
 }					t_reader;
 

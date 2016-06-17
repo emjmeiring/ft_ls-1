@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomeirin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/17 13:24:36 by jomeirin          #+#    #+#             */
+/*   Updated: 2016/06/17 15:47:00 by jomeirin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 t_list	*ft_lstnew(void const *content, size_t size)
@@ -27,13 +39,13 @@ t_list	*ft_lstnew(void const *content, size_t size)
 
 void	add_to_record(t_reader *reader)
 {
-	printf("In add record\n");
+	//printf("In add record\n");
 	t_list *lst_alias;
-	printf("Adding to record in the beginning: %s\n", reader->open.read->d_name);
+	//printf("Adding to record in the beginning: %s\n", reader->open.read->d_name);
 	if (!reader->store->next)
 	{
 		reader->store->next = ft_lstnew(reader->open.read,
-										sizeof(reader->store->next) * STD_SIZ);
+									sizeof(reader->store->next) * STD_SIZ);
 	}
 	else
 	{
@@ -59,7 +71,7 @@ int		init(char *fname, t_reader *reader)
 }
 
 //TODO: Need an extra method here for error handling.
-void	just_display_alphabetically(char *fname, t_reader *reader)
+void	just_display(char *fname, t_reader *reader)
 {
 	if (init(fname, reader) == -1)
 		return ;
@@ -68,7 +80,9 @@ void	just_display_alphabetically(char *fname, t_reader *reader)
 		while ((reader->open.read = readdir(reader->open.dirp)))
 			if (reader->open.read->d_name[0] != '.')
 				add_to_record(reader);
-		alpha_sort(reader, &a_to_z);
+		if (reader->flags.reverse == 'r')
+			alpha_sort(reader, &z_to_a);
+		else alpha_sort(reader, &a_to_z);
 		display(reader);
 	}
 }
@@ -102,40 +116,50 @@ void	init_flags(t_flags *flags)
 	flags->time = '\0';
 	flags->all = '\0';
 }
-//void	display(t_flags flags, t_reader reader)
+//void	display_flags(t_flags flags, t_reader reader)
 //{
 	
 //}
+//void	reursive_print(t_flags flags, t_reader reader)
+
+void	apply_flags(t_reader reader)
+{
+	if (reader.flags.recursive == 'R')
+		printf("recursive");//recursive_print(reader);
+}
+
 void	parse(int argc, char **argv, t_reader *reader)
 {
-	char	dot;
-	t_flags	flags;
+	char	*dot;
+	//t_flags	flags;
 
-	dot = '.';
-	init_flags(&flags);
+	dot = ".\0";
+	init_flags(&(reader->flags));
 	if (argc == 1)
-		just_display_alphabetically(&dot, reader);
+		just_display(dot, reader);
 	else if (argc == 2 && argv[1][0] != '-')
-			just_display_alphabetically(argv[1], reader);
+			just_display(argv[1], reader);
 	else
 	{
 		//TODO: This is where things get really interesting. Need to search for
 		// flags, parse them and collect data relevant to each.
 		if (argv[1][0] == '-')
 		{
-			if (init(argv[argc-1], reader) == -1)
+			if (argv[argc - 1][0] == '-')				
+			{
+				find_flags(argc, argv, &(reader->flags));
+				if (init(".\0", reader) == -1)
+					return ;
+			}
+			else if (init(argv[argc - 1], reader) == -1)
 				return ;
 			else 
-			{
-				find_flags(argc, argv, &flags);
-				//while ((reader->open.read = readdir(reader->open.dirp)))
-			//if (reader->open.read->d_name[0] != '.')
-				//add_to_record(reader);
-			}
+				find_flags(argc, argv, &(reader->flags));
+			apply_flags(*reader);
 			//display_flags(flags, reader);
 		}
-		printf("%c:\n", flags.recursive);
-		printf("%c:\n", flags.reverse);
+		printf("%c:\n", reader->flags.recursive);
+		printf("%c:\n", reader->flags.reverse);
 		printf("Fucks\n");
 	}
 }

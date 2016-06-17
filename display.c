@@ -1,5 +1,17 @@
-#include "ft_ls.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomeirin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/17 13:25:15 by jomeirin          #+#    #+#             */
+/*   Updated: 2016/06/17 13:25:18 by jomeirin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "ft_ls.h"
+/*
 size_t	ft_strlen(const char *s)
 {
 	int index;
@@ -43,7 +55,7 @@ void	size_lstiter(t_list *lst)
 		runner = runner->next;
 	}
 }
-
+*/
 void	display(t_reader *reader)
 {
 	t_list *runner;
