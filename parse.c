@@ -59,6 +59,7 @@ void	add_to_record(t_reader *reader)
 
 int		init(char *fname, t_reader *reader)
 {
+<<<<<<< Updated upstream
 	if (!(reader->open.dirp = opendir(fname)))
 	{
 		perror("ft_ls: cannot access ");
@@ -75,6 +76,22 @@ void	just_display(char *fname, t_reader *reader)
 {
 	if (init(fname, reader) == -1)
 		return ;
+=======
+	if ((reader->open.dirp = opendir(fname)))
+	{
+		reader->store = ft_lstnew((void *)readdir(reader->open.dirp),
+									sizeof(reader->open.read));
+		lstat(fname, reader->buf);
+	}
+	return (!reader->open.dirp);
+	
+}
+
+void	just_display_alphabetically(char *fname, t_reader *reader)
+{
+	if (init(fname, reader))
+		perror("ft_ls: cannot access ../..sd: No such file or directory");
+>>>>>>> Stashed changes
 	else
 	{
 		while ((reader->open.read = readdir(reader->open.dirp)))

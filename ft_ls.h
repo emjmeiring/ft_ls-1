@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "libft/libft.h"
 
 typedef struct		s_flags
 {
@@ -35,11 +36,6 @@ typedef struct		s_flags
 }					t_flags;
 
 typedef struct		s_list
-{
-	void			*content;
-	size_t			size;
-	struct s_list	*next;
-}					t_list;
 
 typedef struct		s_dir_files_opener
 {
@@ -52,7 +48,7 @@ typedef struct		s_dir_files_reader
 	t_opener		open;
 	t_list			*store;
 	t_flags			flags;
-	struct stat		buf;
+	struct stat		*buf;
 }					t_reader;
 
 void				parse(int argc, char **argv, t_reader *reader);
@@ -61,4 +57,5 @@ int					z_to_a(char *s1, char *s2);
 int					a_to_z(char *s1, char *s2);
 void				alpha_sort(t_reader *reader, int (*cmp)(char *, char *));
 void				display(t_reader *reader);
+void				recursive_list(const char *fname, int depth, t_reader *read);
 #endif
