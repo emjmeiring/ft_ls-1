@@ -15,6 +15,9 @@
 int main(int argc, char **argv)
 {
 	t_reader reader;
+	//argc = 3;
+	//argv[1] = "-R";
+	//argv[2] = "../..";
 	parse(argc, argv, &reader);
 	return (0);
 }

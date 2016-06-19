@@ -50,10 +50,11 @@ typedef struct		s_dir_files_reader
 }					t_reader;
 
 void				parse(int argc, char **argv, t_reader *reader);
+void				just_display(char *fname, t_reader *reader);
 void				sort(t_reader *reader);
 int					z_to_a(char *s1, char *s2);
 int					a_to_z(char *s1, char *s2);
 void				alpha_sort(t_reader *reader, int (*cmp)(char *, char *));
 void				display(t_reader *reader);
-void				recursive_list(const char *fname, int depth, t_reader *read);
+void				recursive_list(char *fname, int depth, t_reader *reader);
 #endif

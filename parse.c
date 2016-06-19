@@ -70,8 +70,7 @@ int		init(char *fname, t_reader *reader)
 	return (1);
 }
 
-//TODO: Need an extra method here for error handling.
-void	just_display(char *fname, t_reader *reader)
+void	populate_list(char *fname, t_reader *reader)
 {
 	if (init(fname, reader) == -1)
 		return ;
@@ -83,8 +82,13 @@ void	just_display(char *fname, t_reader *reader)
 		if (reader->flags.reverse == 'r')
 			alpha_sort(reader, &z_to_a);
 		else alpha_sort(reader, &a_to_z);
-		display(reader);
 	}
+}
+//TODO: Need an extra method here for error handling.
+void	just_display(char *fname, t_reader *reader)
+{
+	populate_list(fname, reader);
+	display(reader);
 }
 
 void	find_flags(int argc, char **argv, t_flags *flags)
@@ -122,16 +126,19 @@ void	init_flags(t_flags *flags)
 //}
 //void	reursive_print(t_flags flags, t_reader reader)
 
-void	apply_flags(t_reader reader)
+void	apply_flags(char *fname, t_reader *reader)
 {
-	if (reader.flags.recursive == 'R')
+	if (reader->flags.recursive == 'R')
+	{
+		recursive_list(fname, 0, reader);
 		printf("recursive");//recursive_print(reader);
+	}
 }
 
 void	parse(int argc, char **argv, t_reader *reader)
 {
 	char			*dot;
-	static int		depth;
+	//static int		depth;
 	//t_flags	flags;
 
 	dot = ".\0";
@@ -149,17 +156,23 @@ void	parse(int argc, char **argv, t_reader *reader)
 			if (argv[argc - 1][0] == '-')				
 			{
 				find_flags(argc, argv, &(reader->flags));
-				if (init(".\0", reader) == -1)
+				if (init(dot, reader) == -1)
 					return ;
+				//find_flags(argc, argv, &(reader->flags));
+				//just_display(".\0", reader);
+				//populate_list(dot, reader);
+				apply_flags(dot, reader);
 			}
-			else if (init(argv[argc - 1], reader) == -1)
-				return ;
-			else 
+			else if (init(argv[argc - 1], reader) != -1)
+			{
 				find_flags(argc, argv, &(reader->flags));
-			apply_flags(*reader);
+				//populate_list(argv[argc - 1], reader);
+				//just_display(argv[argc - 1], reader);
+				apply_flags(argv[argc - 1], reader);
+			}
 			//display_flags(flags, reader);
 		}
-		recursive_list(dot, depth, reader);  
+		  
 		printf("%c:\n", reader->flags.recursive);
 		printf("%c:\n", reader->flags.reverse);
 		printf("Fucks\n");

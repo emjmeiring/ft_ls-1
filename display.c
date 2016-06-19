@@ -64,7 +64,7 @@ void	display(t_reader *reader)
 	//size_lstiter(runner);
 	while (runner)
 	{
-		printf("%s    \t", ((struct dirent *)runner->content)->d_name);
+		printf("%s\t", (char *)((struct dirent *)runner->content)->d_name);
 		runner = runner->next;
 	}
 	printf("\n");
