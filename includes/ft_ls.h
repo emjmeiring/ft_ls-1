@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 typedef struct		s_flags
 {
@@ -50,6 +50,12 @@ typedef struct		s_dir_files_reader
 }					t_reader;
 
 void				parse(int argc, char **argv, t_reader *reader);
+void				find_flags(int argc, char **argv, t_flags *flags);
+void				apply_flags(char *fname, t_reader *reader);
+void				init_flags(t_flags *flags);
+void				add_to_record(t_reader *reader);
+int					init(char *fname, t_reader *reader);
+void				populate_list(char *fname, t_reader *reader);
 void				just_display(char *fname, t_reader *reader);
 void				sort(t_reader *reader);
 int					z_to_a(char *s1, char *s2);

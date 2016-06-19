@@ -46,6 +46,7 @@ int		ft_strcmp(const char *s1, const char *s2)
 	free(str2);
 	return (0);
 }
+
 int		z_to_a(char *s1, char *s2)
 {
 	return (ft_strcmp(s1, s2) < 0);
@@ -55,8 +56,6 @@ int		a_to_z(char *s1, char *s2)
 {
 	return (ft_strcmp(s1, s2) > 0);
 }
-
-
 
 void	alpha_sort(t_reader *reader, int (*sort_by)(char *, char *))
 {
